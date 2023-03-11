@@ -26,7 +26,7 @@ public class Login extends JFrame implements ActionListener {
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setContentPane(mainPanel);
-        appLabel.setText(PublicVars.name);
+
 
         signIn.setActionCommand("signIn");
         signIn.addActionListener(this);
