@@ -15,18 +15,19 @@ public class Login extends JFrame implements ActionListener {
     private JTextField userInput;
     private JLabel userLabel;
     private JLabel pwLabel;
-    private JLabel appLabel;
     private JButton createNewButton;
 
     private CompanyList companyList;
 
+    /**
+     *  GUI to log in connected to SQL database using Login.form
+     ***/
     public Login() {
         super(PublicVars.name);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setContentPane(mainPanel);
-        appLabel.setText(PublicVars.name);
 
         signIn.setActionCommand("signIn");
         signIn.addActionListener(this);
@@ -47,7 +48,6 @@ public class Login extends JFrame implements ActionListener {
             try {
                 setVisible(false);
                 // TODO: Attempt Login with SQL
-
 
                 // TODO: SQL returns list
 

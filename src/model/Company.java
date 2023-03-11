@@ -1,10 +1,19 @@
 package model;
 
+/**
+ * Represents a Company:
+ *       - companyName: Name of the Company
+ *       - location: Location of Company
+ *       - status:
+ *           true -> got accepted
+ *           false -> pending/waiting on response
+ ***/
 public class Company {
     private String companyName;
     private String location;
     private Boolean status;
 
+    // Constructs a Company with name, location, and status
     public Company(String companyName, String location, boolean status) {
         this.companyName = companyName;
         this.location = location;

@@ -7,6 +7,9 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ *  GUI create a new account connected to SQL database using CreateNew.form
+ ***/
 public class CreateNew extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JTextField passwordInput;

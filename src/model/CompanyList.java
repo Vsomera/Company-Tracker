@@ -3,9 +3,13 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a List of Companies
+ ***/
 public class CompanyList {
     private List<Company> companySet;
 
+    // Constructs company tracklist
     public CompanyList() {
         companySet = new ArrayList<>();
     }
@@ -14,15 +18,11 @@ public class CompanyList {
         companySet.add(c);
     }
 
-    public void removeCompany(String s) {
-        for (Company c : companySet) {
-            if (c.getCompanyName().equals(s)) {
-                companySet.remove(c);
-            }
-        }
+    public void removeCompany(Company c) {
+        companySet.remove(c);
     }
 
-    public List<Company> getCompanySet() {
+    public List<Company> getCompanyList() {
         return companySet;
     }
 }
