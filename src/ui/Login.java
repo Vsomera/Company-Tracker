@@ -1,5 +1,8 @@
 package ui;
 
+import model.CompanyList;
+import model.PublicVars;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
@@ -14,6 +17,8 @@ public class Login extends JFrame implements ActionListener {
     private JLabel pwLabel;
     private JLabel appLabel;
     private JButton createNewButton;
+
+    private CompanyList companyList;
 
     public Login() {
         super(PublicVars.name);
@@ -39,11 +44,16 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("signIn")) {
-            // TODO: Attempt Login with SQL
-
             try {
                 setVisible(false);
-                new Application();
+                // TODO: Attempt Login with SQL
+
+
+                // TODO: SQL returns list
+
+                // TODO: Convert list to CompanyList class
+                companyList = new CompanyList();
+                new Application(companyList);
 
             } catch (Exception ex) {
                 // TODO: Exception case

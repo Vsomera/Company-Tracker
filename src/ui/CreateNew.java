@@ -1,5 +1,7 @@
 package ui;
 
+import model.PublicVars;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
