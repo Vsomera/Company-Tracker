@@ -46,13 +46,14 @@ DELIMITER //
 CREATE PROCEDURE deleteCompanyList (
   IN companyName VARCHAR(20),
   IN compLocation VARCHAR(20),
-  IN userID INT
+  IN inputUserID INT
 )
 BEGIN
-  DELETE FROM companyList WHERE userID = userID AND compLocation = compLocation AND compName = companyName;
+  DELETE FROM companyList WHERE userID = inputUserID AND compLocation = compLocation AND compName = companyName;
 END//
 
 DELIMITER ;
+
 
 
 
