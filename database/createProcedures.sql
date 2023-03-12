@@ -57,17 +57,23 @@ DELIMITER ;
 
 
 DELIMITER //
+
 /*
-	-- Gets the ID of a user from the users table --
-    CALL getUserId("Bob"); -> returns the id of the usert Bob as int
+    -- Gets the ID of a user from the users table --
+    SELECT getUserId("Bob"); -> returns the id of the user Bob as int
 */
 
-CREATE PROCEDURE getUserId (
-  IN user VARCHAR(20)
+CREATE FUNCTION getUserId (
+  user VARCHAR(20)
 )
+RETURNS INT
+DETERMINISTIC
 BEGIN
-  SELECT id FROM users
-  WHERE userName = user;
+  DECLARE userId INT;
+  SELECT id INTO userId FROM users WHERE userName = user;
+  RETURN userId;
 END//
 
 DELIMITER ;
+
+
