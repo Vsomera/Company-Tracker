@@ -19,8 +19,8 @@ DELIMITER ;
 
 DELIMITER //
 /*
-	-- Insert a user into the users table --
-    CALL addCompanyList('Microsoft', 'Vancouver');
+	-- Adds a company to the companyList table --
+    CALL addCompanyList('Microsoft', 'Vancouver', getUserId("Bob"));
 */
 
 CREATE PROCEDURE addCompanyList (
@@ -39,8 +39,8 @@ DELIMITER ;
 
 DELIMITER //
 /*
-	-- Insert a user into the users table --
-    CALL deleteCompanyList('Microsoft', 'Vancouver', );
+	-- Deletes a company from the companyList table --
+    CALL deleteCompanyList('Microsoft', 'Vancouver', getUserId("Bob"));
 */
 
 CREATE PROCEDURE deleteCompanyList (
@@ -49,16 +49,17 @@ CREATE PROCEDURE deleteCompanyList (
   IN userID INT
 )
 BEGIN
-  DELETE FROM companyList WHERE userID = userID, compLocation = compLocation, compName = companyName;
+  DELETE FROM companyList WHERE userID = userID AND compLocation = compLocation AND compName = companyName;
 END//
 
 DELIMITER ;
 
 
+
 DELIMITER //
 /*
 	-- Gets the ID of a user from the users table --
-    CALL deleteCompanyList('Bob');
+    CALL getUserId("Bob"); -> returns the id of the usert Bob as int
 */
 
 CREATE PROCEDURE getUserId (
