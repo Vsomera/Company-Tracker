@@ -7,6 +7,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class Login extends JFrame implements ActionListener {
     JPanel mainPanel;
@@ -16,6 +20,7 @@ public class Login extends JFrame implements ActionListener {
     private JLabel userLabel;
     private JLabel pwLabel;
     private JButton createNewButton;
+    private JLabel message;
 
     private CompanyList companyList;
 
@@ -45,19 +50,44 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("signIn")) {
-            try {
-                setVisible(false);
-                // TODO: Attempt Login with SQL
+            if ((userInput.getText().length() > 0) && (passwordInput.getText().length() > 0)) {
+                try {
+                    String url = "jdbc:mysql://localhost:3306/trackmate";
 
-                // TODO: SQL returns list
+                    Class.forName("com.mysql.cj.jdbc.Driver");
 
-                // TODO: Convert list to CompanyList class
-                companyList = new CompanyList();
-                new Application(companyList);
+                    Connection con = DriverManager.getConnection(
+                            url,"root","mfl@mySQL03");
 
-            } catch (Exception ex) {
-                // TODO: Exception case
-                System.out.println("Caught Exception...");
+                    Statement stmt = con.createStatement();
+
+                    String username = userInput.getText();
+                    String password = passwordInput.getText();
+
+                    ResultSet rs = stmt.executeQuery("select * from users");
+
+                    while(rs.next()) {
+                        String result = rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3);
+
+                        if (result.contains(username + "  " + password)) {
+                            setVisible(false);
+
+                            CompanyList companies = getTracklist(rs);
+
+                            companyList = companies;
+
+                            new Application(companyList);
+                        } else {
+                            message.setText("ERROR: Account doesn't exist.");
+                        }
+                    }
+
+                    con.close();
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            } else {
+                message.setText("ERROR: Cannot have blank fields.");
             }
         }
 
@@ -65,5 +95,9 @@ public class Login extends JFrame implements ActionListener {
             setVisible(false);
             new CreateNew();
         }
+    }
+
+    private CompanyList getTracklist(ResultSet rs) {
+        return null;
     }
 }
