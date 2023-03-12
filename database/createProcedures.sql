@@ -63,7 +63,7 @@ DELIMITER //
 */
 
 CREATE PROCEDURE getUserId (
-  IN user VARCHAR(20),
+  IN user VARCHAR(20)
 )
 BEGIN
   SELECT id FROM users
