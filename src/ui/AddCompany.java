@@ -9,9 +9,6 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-/**
- *  GUI to add a company to tracklist using AddCompany.form
- ***/
 public class AddCompany extends JFrame implements ActionListener {
     private JPanel mainPanel;
     private JTextField locationInput;

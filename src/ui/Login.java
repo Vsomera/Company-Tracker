@@ -1,6 +1,5 @@
 package ui;
 
-import model.Company;
 import model.CompanyList;
 import model.PublicVars;
 
@@ -8,10 +7,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
 
 public class Login extends JFrame implements ActionListener {
     JPanel mainPanel;
@@ -20,20 +15,18 @@ public class Login extends JFrame implements ActionListener {
     private JTextField userInput;
     private JLabel userLabel;
     private JLabel pwLabel;
+    private JLabel appLabel;
     private JButton createNewButton;
-    private JLabel message;
 
     private CompanyList companyList;
 
-    /**
-     *  GUI to log in connected to SQL database using Login.form
-     ***/
     public Login() {
         super(PublicVars.name);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         ((JPanel) getContentPane()).setBorder(new EmptyBorder(13, 13, 13, 13));
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setContentPane(mainPanel);
+        appLabel.setText(PublicVars.name);
 
         signIn.setActionCommand("signIn");
         signIn.addActionListener(this);
@@ -51,42 +44,20 @@ public class Login extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("signIn")) {
-            if ((userInput.getText().length() > 0) && (passwordInput.getText().length() > 0)) {
-                try {
-                    String url = "jdbc:mysql://localhost:3306/trackmate";
+            try {
+                setVisible(false);
+                // TODO: Attempt Login with SQL
 
-                    Class.forName("com.mysql.cj.jdbc.Driver");
 
-                    Connection con = DriverManager.getConnection(
-                            url,"root","mfl@mySQL03");
+                // TODO: SQL returns list
 
-                    Statement stmt = con.createStatement();
+                // TODO: Convert list to CompanyList class
+                companyList = new CompanyList();
+                new Application(companyList);
 
-                    String username = userInput.getText();
-                    String password = passwordInput.getText();
-
-                    ResultSet rs = stmt.executeQuery("select * from users");
-
-                    while(rs.next()) {
-                        String result = rs.getInt(1)+"  "+rs.getString(2)+"  "+rs.getString(3);
-
-                        if (result.contains(username + "  " + password)) {
-                            setVisible(false);
-
-                            companyList = getTracklist(rs.getInt(1));
-
-                            new Application(companyList);
-                        } else {
-                            message.setText("ERROR: Account doesn't exist.");
-                        }
-                    }
-
-                    con.close();
-                } catch (Exception ex) {
-                    System.out.println(ex);
-                }
-            } else {
-                message.setText("ERROR: Cannot have blank fields.");
+            } catch (Exception ex) {
+                // TODO: Exception case
+                System.out.println("Caught Exception...");
             }
         }
 
@@ -94,44 +65,5 @@ public class Login extends JFrame implements ActionListener {
             setVisible(false);
             new CreateNew();
         }
-    }
-
-    private CompanyList getTracklist(int userID) {
-        try {
-            String url = "jdbc:mysql://localhost:3306/trackmate";
-
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection con = DriverManager.getConnection(
-                    url,"root","mfl@mySQL03");
-
-            Statement stmt = con.createStatement();
-
-            ResultSet rs = stmt.executeQuery("select * from companylist");
-
-            CompanyList companies = new CompanyList();
-
-            while(rs.next()) {
-                String result = rs.getString(1)  + "  "
-                              + rs.getString(2)  + "  "
-                              + rs.getBoolean(3) + "  "
-                              + rs.getInt(4);
-
-                if (rs.getInt(4) == userID) {
-                    companies.addCompany(new Company(rs.getString(1),
-                                                     rs.getString(2),
-                                                     rs.getBoolean(3)));
-                } else {
-                    return new CompanyList();
-                }
-            }
-            con.close();
-
-            return companies;
-        } catch (Exception ex) {
-            System.out.println(ex);
-        }
-
-        return null;
     }
 }
