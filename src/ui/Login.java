@@ -1,5 +1,6 @@
 package ui;
 
+import model.Company;
 import model.CompanyList;
 import model.PublicVars;
 
@@ -72,9 +73,7 @@ public class Login extends JFrame implements ActionListener {
                         if (result.contains(username + "  " + password)) {
                             setVisible(false);
 
-                            CompanyList companies = getTracklist(rs);
-
-                            companyList = companies;
+                            companyList = getTracklist(rs.getInt(1));
 
                             new Application(companyList);
                         } else {
@@ -97,7 +96,42 @@ public class Login extends JFrame implements ActionListener {
         }
     }
 
-    private CompanyList getTracklist(ResultSet rs) {
+    private CompanyList getTracklist(int userID) {
+        try {
+            String url = "jdbc:mysql://localhost:3306/trackmate";
+
+            Class.forName("com.mysql.cj.jdbc.Driver");
+
+            Connection con = DriverManager.getConnection(
+                    url,"root","mfl@mySQL03");
+
+            Statement stmt = con.createStatement();
+
+            ResultSet rs = stmt.executeQuery("select * from companylist");
+
+            CompanyList companies = new CompanyList();
+
+            while(rs.next()) {
+                String result = rs.getString(1)  + "  "
+                              + rs.getString(2)  + "  "
+                              + rs.getBoolean(3) + "  "
+                              + rs.getInt(4);
+
+                if (rs.getInt(4) == userID) {
+                    companies.addCompany(new Company(rs.getString(1),
+                                                     rs.getString(2),
+                                                     rs.getBoolean(3)));
+                } else {
+                    return new CompanyList();
+                }
+            }
+            con.close();
+
+            return companies;
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
         return null;
     }
 }
