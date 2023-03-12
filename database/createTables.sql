@@ -1,9 +1,18 @@
+CREATE DATABASE trackmate
+
 CREATE TABLE users (
   id INT NOT NULL AUTO_INCREMENT,
-  userName VARCHAR(8) NOT NULL,
+  userName VARCHAR(20) NOT NULL,
   userPassword VARCHAR(20) NOT NULL,
   PRIMARY KEY (id)
 );
+
+/*
+    -- INSERT into Users Table --
+	INSERT INTO users (userName, userPassword)
+    VALUES ('Bob', 'Password');
+
+*/
 
 CREATE TABLE companyList (
   compName VARCHAR(20) NOT NULL,
@@ -13,14 +22,7 @@ CREATE TABLE companyList (
 );
 
 /*
-	
-    -- INSERT into Users Table --
-	INSERT INTO users (userName, userPassword)
-    VALUES ('Bob', 'Password');
-
 	-- Insert into Company List Table--
 	INSERT INTO companylist (compName, compLocation, userID)
 	VALUES ('Microsoft', 'Vancouver', 1);
 */
-
-
